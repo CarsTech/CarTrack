@@ -9,7 +9,6 @@ const FILES_TO_CACHE = [
   'app.js',
   'version.js',
   'manifest.json',
-  'icon-192.png',
   'icon-512.png',
 ];
 
