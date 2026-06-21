@@ -1,0 +1,21 @@
+{
+  "name": "CarTrack - Car Maintenance Tracker",
+  "short_name": "CarTrack",
+  "description": "Local-first car maintenance tracker. No account, no cloud — all data stays on your device.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F8F9FA",
+  "theme_color": "#1E3A5F",
+  "lang": "en",
+  "categories": ["utilities", "productivity"],
+  "icons": [
+    {
+      "src": "icons/330px-Fluent_Emoji_Color_1f697.svg.png",
+      "sizes": "330x330",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

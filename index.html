@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1E3A5F">
+  <meta name="description" content="Local-first car maintenance tracker — no account, no cloud.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CarTrack">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/330px-Fluent_Emoji_Color_1f697.svg.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>CarTrack</title>
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- Sidebar backdrop (tablet / mobile) -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- ═══ SIDEBAR ══════════════════════════════════════ -->
+    <aside id="app-sidebar" class="app-sidebar" aria-label="Main navigation">
+
+      <div class="sidebar-header">
+        <div class="sidebar-brand">
+          <span class="sidebar-brand-icon sidebar-brand-icon--emoji">🚗</span>
+          <span class="sidebar-brand-name">CarTrack</span>
+        </div>
+        <button id="btn-sidebar-close" class="btn-icon sidebar-close-btn" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="sidebar-nav-item" id="nav-dashboard" aria-label="My Cars">
+          <span class="nav-emoji">🛡️</span>
+          <span class="nav-label">My Cars</span>
+        </button>
+        <button class="sidebar-nav-item" id="nav-history" aria-label="Records">
+          <span class="nav-emoji">📋</span>
+          <span class="nav-label">Records</span>
+        </button>
+        <button class="sidebar-nav-item" id="nav-calendar" aria-label="Calendar">
+          <span class="nav-emoji">📅</span>
+          <span class="nav-label">Calendar</span>
+        </button>
+        <button class="sidebar-nav-item" id="nav-settings" aria-label="Settings">
+          <span class="nav-emoji">⚙️</span>
+          <span class="nav-label">Settings</span>
+        </button>
+        <button class="sidebar-nav-item" id="nav-backup" aria-label="Backup">
+          <span class="nav-emoji">💾</span>
+          <span class="nav-label">Backup</span>
+        </button>
+        <button class="sidebar-nav-item" id="nav-guide" aria-label="Quick Start Guide">
+          <span class="nav-emoji">📖</span>
+          <span class="nav-label">Quick Start Guide</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="sidebar-nav-item sidebar-nav-item--footer" id="nav-activation" aria-label="Activation">
+          <span class="nav-emoji">🔑</span>
+          <span class="nav-label" id="sidebar-activation-label">Activation</span>
+        </button>
+        <div class="sidebar-version-row">
+          <span class="nav-emoji">🔧</span>
+          <span class="nav-label sidebar-version-text" id="sidebar-version"></span>
+        </div>
+      </div>
+
+    </aside><!-- /#app-sidebar -->
+
+    <!-- ═══ MAIN WRAPPER (header + content) ══════════════ -->
+    <div class="app-wrapper">
+
+      <header class="app-header">
+        <div class="header-left">
+          <button id="btn-sidebar-toggle" class="btn-icon" aria-label="Toggle menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6"  x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+          <button id="btn-back" class="btn-icon hidden" aria-label="Go back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+            </svg>
+          </button>
+        </div>
+        <div class="header-right">
+          <button id="btn-settings" class="btn-icon" aria-label="Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+      <div id="demo-banner" class="demo-banner hidden" onclick="openActivationModal()">
+        <span id="demo-banner-text"></span>
+        <span class="demo-banner-cta">Activate →</span>
+      </div>
+
+      <!-- Main Content Area — views swapped by router -->
+      <main class="app-main">
+        <div id="view-dashboard" class="view"></div>
+        <div id="view-car-detail" class="view hidden"></div>
+        <div id="view-settings" class="view hidden"></div>
+        <div id="view-history" class="view hidden"></div>
+        <div id="view-calendar" class="view hidden"></div>
+        <div id="view-backup" class="view hidden"></div>
+        <div id="view-guide" class="view hidden"></div>
+      </main>
+
+    </div><!-- /.app-wrapper -->
+
+  </div><!-- /#app -->
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Modal Overlay — single overlay, content injected dynamically -->
+  <div id="modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div id="modal-container" class="modal-container"></div>
+  </div>
+
+  <!-- Scripts — version.js must load first (used by service-worker.js too) -->
+  <script src="version.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
