@@ -349,7 +349,7 @@ small { font-size: 0.8125rem; }
 /* Large screens (≥1280px): centered card layout */
 @media (min-width: 1280px) {
   body {
-    background: #2D1B4E;
+    background: #020B18;
   }
   #app {
     max-width: 1360px;
