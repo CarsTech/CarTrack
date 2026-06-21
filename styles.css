@@ -226,7 +226,7 @@ small { font-size: 0.8125rem; }
   top: 0; left: 0;
   height: 100%;
   width: var(--sidebar-width);
-  background: var(--primary);
+  background: linear-gradient(170deg, #020B18 0%, #0D2240 30%, #1E4080 55%, #0A1A35 80%, #020810 100%);
   color: var(--text-on-primary);
   z-index: 200;
   display: flex;
@@ -395,7 +395,7 @@ small { font-size: 0.8125rem; }
   top: 0;
   z-index: 100;
   height: var(--header-height);
-  background: var(--primary);
+  background: linear-gradient(90deg, #020B18 0%, #1E4080 50%, #020810 100%);
   display: flex;
   align-items: center;
   justify-content: space-between;
