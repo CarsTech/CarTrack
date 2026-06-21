@@ -482,7 +482,6 @@ function renderDashboard() {
   if (appData.cars.length === 0) {
     carsHtml = `
       <div class="empty-state">
-        <div class="empty-state-icon">🚗</div>
         <h3>No cars yet</h3>
         <p>Add your first car to start tracking maintenance.</p>
         <button class="btn btn-primary" onclick="openAddCarModal()">+ Add Car</button>
