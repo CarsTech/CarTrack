@@ -9,7 +9,7 @@ const FILES_TO_CACHE = [
   'app.js',
   'version.js',
   'manifest.json',
-  'icons/330px-Fluent_Emoji_Color_1f697.svg.png',
+  '330px-Fluent_Emoji_Color_1f697.svg.png',
 ];
 
 self.addEventListener('install', event => {

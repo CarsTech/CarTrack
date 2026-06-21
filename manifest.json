@@ -12,7 +12,7 @@
   "categories": ["utilities", "productivity"],
   "icons": [
     {
-      "src": "icons/330px-Fluent_Emoji_Color_1f697.svg.png",
+      "src": "330px-Fluent_Emoji_Color_1f697.svg.png",
       "sizes": "330x330",
       "type": "image/png",
       "purpose": "any maskable"
