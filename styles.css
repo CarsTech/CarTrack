@@ -5,15 +5,15 @@
 
 /* ─── Design Tokens ─────────────────────────────────── */
 :root {
-  --primary:        #1E3A5F;
-  --primary-light:  #2A527F;
-  --primary-dark:   #152B47;
+  --primary:        #150D25;
+  --primary-light:  #2D1B4E;
+  --primary-dark:   #0A0715;
   --accent:         #FF6B35;
   --accent-hover:   #E85A24;
   --accent-light:   #FFF0EB;
 
-  --btn-export-bg:       #2A527F;
-  --btn-export-hover:    #1E3A5F;
+  --btn-export-bg:       #3D2B6E;
+  --btn-export-hover:    #2D1B4E;
   --btn-import-bg:       #FF6B35;
   --btn-import-hover:    #E85A24;
 
@@ -28,7 +28,7 @@
   --bg-card:        #FFFFFF;
   --bg-card-hover:  #FAFBFC;
   --border:         #E4E7EB;
-  --border-focus:   #1E3A5F;
+  --border-focus:   #2D1B4E;
 
   --text:           #1D2B36;
   --text-secondary: #6B7A8A;
@@ -248,6 +248,7 @@ small { font-size: 0.8125rem; }
 .sidebar-brand { display: flex; align-items: center; gap: 10px; overflow: hidden; }
 .sidebar-brand-icon { width: 30px; height: 30px; border-radius: 7px; flex-shrink: 0; }
 .sidebar-brand-icon--emoji { width: auto; height: auto; background: none; border-radius: 0; font-size: 1.6rem; line-height: 1; display: flex; align-items: center; }
+.sidebar-brand-logo { width: 36px; height: 36px; object-fit: contain; flex-shrink: 0; }
 .sidebar-brand-name { font-size: 1.125rem; font-weight: 700; letter-spacing: -.3px; white-space: nowrap; }
 .sidebar-close-btn { color: rgba(255,255,255,.65); flex-shrink: 0; }
 .sidebar-close-btn:hover { color: white; }
@@ -348,7 +349,7 @@ small { font-size: 0.8125rem; }
 /* Large screens (≥1280px): centered card layout */
 @media (min-width: 1280px) {
   body {
-    background: #1a2737;
+    background: #2D1B4E;
   }
   #app {
     max-width: 1360px;
@@ -374,7 +375,7 @@ small { font-size: 0.8125rem; }
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    background: var(--bg);
+    background: linear-gradient(160deg, #F5EFE6 0%, #FAF6F0 40%, #FDFCFA 100%);
   }
   .sidebar-overlay { display: none !important; }
 }
@@ -443,6 +444,7 @@ small { font-size: 0.8125rem; }
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  background: linear-gradient(160deg, #F5EFE6 0%, #FAF6F0 40%, #FDFCFA 100%);
 }
 
 /* ─── Views ──────────────────────────────────────────── */
