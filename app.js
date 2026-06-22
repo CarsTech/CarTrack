@@ -2155,7 +2155,7 @@ function openLogMaintenanceModal(carId, existingItemId, defaultDate) {
             </div>
             <div class="form-group">
               <label for="mf-done-km">Mileage <span class="optional">optional</span></label>
-              <input type="number" id="mf-done-km" value="${item && item.lastDoneKm != null ? item.lastDoneKm : (car.currentKm != null ? car.currentKm : '')}" min="0" max="9999999" inputmode="numeric" placeholder="km at service" oninput="validateDoneKm(${car.currentKm != null ? car.currentKm : 'null'})">
+              <input type="number" id="mf-done-km" value="${item && item.lastDoneKm != null ? item.lastDoneKm : (car.currentKm != null ? car.currentKm : '')}" min="0" max="9999999" inputmode="numeric" placeholder="e.g. 85000" oninput="validateDoneKm(${car.currentKm != null ? car.currentKm : 'null'})">
               <div class="form-error" id="mf-done-km-error" style="display:none;">Mileage can't be less than current odometer${car.currentKm != null ? ` (${formatKm(car.currentKm)})` : ''}.</div>
             </div>
           </div>
@@ -2190,7 +2190,7 @@ function openLogMaintenanceModal(carId, existingItemId, defaultDate) {
           </div>
           <div class="form-group">
             <label for="mf-sched-km">Target mileage <span class="optional">optional</span></label>
-            <input type="number" id="mf-sched-km" min="0" inputmode="numeric" placeholder="km at which to do it" value="${isScheduled && item.intervalKm != null ? item.intervalKm : ''}" oninput="validateSchedKm(${car.currentKm != null ? car.currentKm : 'null'})">
+            <input type="number" id="mf-sched-km" min="0" inputmode="numeric" placeholder="e.g. 95000" value="${isScheduled && item.intervalKm != null ? item.intervalKm : ''}" oninput="validateSchedKm(${car.currentKm != null ? car.currentKm : 'null'})">
             <div class="form-error" id="mf-sched-km-error" style="display:none;">Target mileage can't be less than current odometer${car.currentKm != null ? ` (${formatKm(car.currentKm)})` : ''}.</div>
           </div>
         </div>
