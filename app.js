@@ -64,6 +64,12 @@ const TECHNICAL_TYPES = [
   { key: 'tire_replace',    name: 'Tire Replacement',             group: 'Tires & Wheels',intervalKm: 40000, intervalMonths: 60 },
 ];
 
+const CAR_COLOR_PALETTE = [
+  '#1E88E5','#43A047','#E53935','#FB8C00',
+  '#8E24AA','#00ACC1','#F4511E','#6D4C41',
+  '#FFB300','#546E7A','#D81B60','#00897B',
+];
+
 // ─── CAR MAKES & MODELS ───────────────────────────────
 const CAR_MAKES_MODELS = {
   'Alfa Romeo':    ['147', '156', '159', 'Giulia', 'Giulietta', 'Stelvio'],
@@ -533,7 +539,7 @@ function renderCarCard(car) {
       <div class="car-card-status-bar ${worst}"></div>
       <div class="car-card-body">
         <div class="car-card-header">
-          <div class="car-card-name">${escHtml(car.name)}${car.plate ? ` <span class="car-plate-tag">${escHtml(car.plate)}</span>` : ''}</div>
+          <div class="car-card-name">${car.color ? `<span class="car-color-dot-display" style="background:${car.color}"></span>` : ''}${escHtml(car.name)}${car.plate ? ` <span class="car-plate-tag">${escHtml(car.plate)}</span>` : ''}</div>
           <div class="car-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></div>
         </div>
         ${meta ? `<div class="car-card-meta">${escHtml(meta)}</div>` : ''}
@@ -1667,6 +1673,13 @@ function renderSettings() {
   } catch (e) {}
 }
 
+function selectCarColor(color) {
+  document.getElementById('cf-color').value = color;
+  document.querySelectorAll('.car-color-dot').forEach(d => {
+    d.classList.toggle('selected', d.dataset.color === color);
+  });
+}
+
 function setDistanceUnit(unit) {
   appData.settings.distanceUnit = unit;
   saveData();
@@ -1822,6 +1835,13 @@ function openAddCarModal() {
           <label for="cf-vin">Chassis Number (VIN) <span class="optional">optional</span></label>
           <input type="text" id="cf-vin" placeholder="e.g. WVWZZZ1JZ3W386752" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" style="font-family:monospace;letter-spacing:.04em;">
         </div>
+        <div class="form-group">
+          <label>Car Color <span class="optional">optional</span></label>
+          <div class="car-color-picker" id="car-color-picker">
+            ${CAR_COLOR_PALETTE.map(c => `<button type="button" class="car-color-dot" style="background:${c}" data-color="${c}" onclick="selectCarColor('${c}')"></button>`).join('')}
+          </div>
+          <input type="hidden" id="cf-color" value="">
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
@@ -1891,6 +1911,13 @@ function openEditCarModal(carId) {
           <label for="cf-vin">Chassis Number (VIN) <span class="optional">optional</span></label>
           <input type="text" id="cf-vin" value="${escHtml(car.vin || '')}" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" style="font-family:monospace;letter-spacing:.04em;">
         </div>
+        <div class="form-group">
+          <label>Car Color <span class="optional">optional</span></label>
+          <div class="car-color-picker" id="car-color-picker">
+            ${CAR_COLOR_PALETTE.map(c => `<button type="button" class="car-color-dot ${car.color === c ? 'selected' : ''}" style="background:${c}" data-color="${c}" onclick="selectCarColor('${c}')"></button>`).join('')}
+          </div>
+          <input type="hidden" id="cf-color" value="${escHtml(car.color || '')}">
+        </div>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -1916,6 +1943,7 @@ function submitCarForm(e) {
   const km    = parseFloat(document.getElementById('cf-km').value);
   const vin   = (document.getElementById('cf-vin').value || '').trim().toUpperCase();
   const plate = (document.getElementById('cf-plate').value || '').trim().toUpperCase();
+  const color = document.getElementById('cf-color').value || null;
 
   if (!name) { showToast('Please enter a name for the car.', 'error'); return; }
 
@@ -1930,6 +1958,7 @@ function submitCarForm(e) {
     car.currentKm = isNaN(km) ? null : km;
     car.vin   = vin || null;
     car.plate = plate || null;
+    car.color = color;
     saveData();
     closeModal();
     showToast('Car updated.');
@@ -1945,6 +1974,7 @@ function submitCarForm(e) {
       year: isNaN(year) ? null : year,
       currentKm: isNaN(km) ? null : km,
       vin: vin || null,
+      color: color,
       createdAt: new Date().toISOString(),
       maintenanceItems: [],
       history: [],
