@@ -564,7 +564,7 @@ function renderCarDetail(carId) {
       }
       <button class="btn-edit-km" onclick="showKmEdit('${escHtml(carId)}')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        ${car.currentKm != null ? 'Update km' : 'Set km'}
+        ${car.currentKm != null ? 'Update Mileage' : 'Set Mileage'}
       </button>
     </div>
   `;
@@ -1473,14 +1473,14 @@ function renderQuickStart() {
             <div class="qs-step-num">3</div>
             <div class="qs-step-body">
               <div class="qs-step-title">Check Reminders</div>
-              <div class="qs-step-desc">CarTrack automatically calculates when the next service is due — by km and/or time — and shows a colored status for each reminder.</div>
+              <div class="qs-step-desc">CarTrack automatically calculates when the next service is due — by mileage and/or time — and shows a colored status for each reminder.</div>
             </div>
           </div>
           <div class="qs-step">
             <div class="qs-step-num">4</div>
             <div class="qs-step-body">
               <div class="qs-step-title">Update Mileage</div>
-              <div class="qs-step-desc">Keep mileage up to date so km-based reminders stay accurate. Tap <strong>Update km</strong> on the car page anytime.</div>
+              <div class="qs-step-desc">Keep mileage up to date so mileage-based reminders stay accurate. Tap <strong>Update Mileage</strong> on the car page anytime.</div>
             </div>
           </div>
         </div>
@@ -1490,8 +1490,8 @@ function renderQuickStart() {
         <h2>🔴 Understanding Reminder Status</h2>
         <p class="qs-text" style="margin-bottom:12px;">Each reminder shows a colored dot based on urgency:</p>
         <div class="qs-status-row">
-          <div class="qs-status-item"><div class="qs-dot red"></div><div><strong>Red — Overdue.</strong> The service is past due by date or by km. Act soon.</div></div>
-          <div class="qs-status-item"><div class="qs-dot yellow"></div><div><strong>Yellow — Due soon.</strong> Within 30 days or 1,000 km of the threshold.</div></div>
+          <div class="qs-status-item"><div class="qs-dot red"></div><div><strong>Red — Overdue.</strong> The service is past due by date or mileage. Act soon.</div></div>
+          <div class="qs-status-item"><div class="qs-dot yellow"></div><div><strong>Yellow — Due soon.</strong> Within 30 days or 1,000 miles/km of the threshold.</div></div>
           <div class="qs-status-item"><div class="qs-dot green"></div><div><strong>Green — On track.</strong> Plenty of time or km remaining.</div></div>
           <div class="qs-status-item"><div class="qs-dot grey"></div><div><strong>Grey — Not logged yet.</strong> No records yet for this item.</div></div>
         </div>
@@ -1499,7 +1499,7 @@ function renderQuickStart() {
 
       <div class="qs-panel">
         <h2>🔧 Maintenance Types</h2>
-        <p class="qs-text">Types are grouped by category: <strong>Filters</strong>, <strong>Engine</strong>, <strong>Brakes</strong>, <strong>Suspension</strong>, <strong>Tires &amp; Wheels</strong>, <strong>Electrical</strong>. Each comes with default km and time intervals that you can customize per car. You can also create <strong>custom types</strong> for anything not in the list.</p>
+        <p class="qs-text">Types are grouped by category: <strong>Filters</strong>, <strong>Engine</strong>, <strong>Brakes</strong>, <strong>Suspension</strong>, <strong>Tires &amp; Wheels</strong>, <strong>Electrical</strong>. Each comes with default mileage and time intervals that you can customize per car. You can also create <strong>custom types</strong> for anything not in the list.</p>
       </div>
 
       <div class="qs-panel">
