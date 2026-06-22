@@ -1814,7 +1814,7 @@ function openAddCarModal() {
             <input type="number" id="cf-year" placeholder="e.g. 2018" min="1900" max="2099">
           </div>
           <div class="form-group">
-            <label for="cf-km">Current Mileage (km/miles) <span class="optional">optional</span></label>
+            <label for="cf-km">Current Mileage <span class="optional">optional</span></label>
             <input type="number" id="cf-km" placeholder="e.g. 85000" min="0" max="9999999" inputmode="numeric">
           </div>
         </div>
@@ -1883,7 +1883,7 @@ function openEditCarModal(carId) {
             <input type="number" id="cf-year" value="${car.year != null ? car.year : ''}" min="1900" max="2099">
           </div>
           <div class="form-group">
-            <label for="cf-km">Current Mileage (km/miles) <span class="optional">optional</span></label>
+            <label for="cf-km">Current Mileage <span class="optional">optional</span></label>
             <input type="number" id="cf-km" value="${car.currentKm != null ? car.currentKm : ''}" min="0" max="9999999" inputmode="numeric">
           </div>
         </div>
