@@ -1829,7 +1829,27 @@ input.input-error, textarea.input-error { border-color: var(--status-red) !impor
 .app-sidebar::-webkit-scrollbar,
 .sidebar-nav::-webkit-scrollbar { display: none; }
 
-/* ─── Print (minimal) ────────────────────────────────── */
+/* ─── Print ──────────────────────────────────────────── */
 @media print {
-  .app-header, .fab, #toast-container, .modal-overlay { display: none !important; }
+  body, #app, .app-wrapper, .app-main { background: #fff !important; color: #000 !important; }
+  .app-sidebar, .app-header, .fab, #toast-container, .modal-overlay,
+  .demo-banner, .rf-bar, .page-header button, .reminder-actions,
+  .history-item-actions, #btn-sidebar-toggle, #btn-back, #btn-settings { display: none !important; }
+
+  #app { box-shadow: none !important; max-width: 100% !important; }
+  .app-wrapper { margin-left: 0 !important; }
+
+  .page-header { border-bottom: 2px solid #333; margin-bottom: 12px; padding-bottom: 8px; }
+  .page-header h2 { font-size: 1.4rem; color: #000; }
+  .ah-total { color: #555; font-size: 0.9rem; }
+
+  .history-item, .reminder-item {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    margin-bottom: 8px !important;
+  }
+
+  .ah-car-section-title { font-size: 1rem; font-weight: 700; margin-top: 16px; color: #000; }
+  .badge { border: 1px solid #999; background: #eee !important; color: #000 !important; }
 }

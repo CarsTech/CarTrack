@@ -827,6 +827,7 @@ function renderAllHistory() {
       <h2>📋 Records</h2>
       <div style="display:flex;align-items:center;gap:12px;">
         <span class="ah-total" id="rf-count">${all.length} records</span>
+        <button class="btn btn-secondary btn-sm" onclick="window.print()" title="Print records">🖨 Print</button>
         ${firstCarId ? `<button class="btn btn-primary btn-sm" onclick="openAddRecordOnDate(null)">+ Add Record</button>` : ''}
       </div>
     </div>
