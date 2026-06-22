@@ -294,11 +294,11 @@ function buildTechLabel(daysLeft, kmLeft, hasKm, hasTime, currentKm) {
     else                    parts.push(`${daysLeft}d left`);
   }
   if (hasKm && kmLeft !== null) {
-    if (kmLeft < 0)         parts.push(`${formatKm(Math.abs(kmLeft))} km overdue`);
-    else if (currentKm != null) parts.push(`next at ${formatKm(currentKm + kmLeft)} km`);
-    else                    parts.push(`${formatKm(kmLeft)} km left`);
+    if (kmLeft < 0)         parts.push(`${formatKm(Math.abs(kmLeft))} overdue`);
+    else if (currentKm != null) parts.push(`next at ${formatKm(currentKm + kmLeft)}`);
+    else                    parts.push(`${formatKm(kmLeft)} left`);
   } else if (hasKm && currentKm == null) {
-    parts.push('Enter car km to track');
+    parts.push('Enter mileage to track');
   }
   return parts.length ? parts.join(' · ') : 'On schedule';
 }
@@ -1492,7 +1492,7 @@ function renderQuickStart() {
         <div class="qs-status-row">
           <div class="qs-status-item"><div class="qs-dot red"></div><div><strong>Red — Overdue.</strong> The service is past due by date or mileage. Act soon.</div></div>
           <div class="qs-status-item"><div class="qs-dot yellow"></div><div><strong>Yellow — Due soon.</strong> Within 30 days or 1,000 miles/km of the threshold.</div></div>
-          <div class="qs-status-item"><div class="qs-dot green"></div><div><strong>Green — On track.</strong> Plenty of time or km remaining.</div></div>
+          <div class="qs-status-item"><div class="qs-dot green"></div><div><strong>Green — On track.</strong> Plenty of time or mileage remaining.</div></div>
           <div class="qs-status-item"><div class="qs-dot grey"></div><div><strong>Grey — Not logged yet.</strong> No records yet for this item.</div></div>
         </div>
       </div>
