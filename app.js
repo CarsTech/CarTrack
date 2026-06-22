@@ -336,15 +336,18 @@ function getGlobalAlerts() {
   const alerts = [];
   appData.cars.forEach(car => {
     (car.maintenanceItems || []).forEach(item => {
-      const { status, label } = calcStatus(item, car.currentKm);
+      const { status, label, daysLeft, kmLeft } = calcStatus(item, car.currentKm);
       if (status === 'red' || status === 'yellow') {
-        alerts.push({ car, item, status, label });
+        alerts.push({ car, item, status, label, daysLeft, kmLeft });
       }
     });
   });
   alerts.sort((a, b) => {
     const rank = { red: 0, yellow: 1 };
-    return rank[a.status] - rank[b.status];
+    if (rank[a.status] !== rank[b.status]) return rank[a.status] - rank[b.status];
+    const aDays = a.daysLeft ?? Infinity;
+    const bDays = b.daysLeft ?? Infinity;
+    return aDays - bDays;
   });
   return alerts;
 }
