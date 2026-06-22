@@ -466,7 +466,31 @@ small { font-size: 0.8125rem; }
   margin: 16px 16px 0;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
+.alert-banner-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 16px;
+  background: var(--status-yellow-bg);
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.alert-banner-toggle-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #7A4A1A;
+}
+.alert-banner-chevron {
+  width: 18px; height: 18px;
+  color: #7A4A1A;
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+.alert-banner-chevron.open { transform: rotate(180deg); }
+.alert-banner-body.hidden { display: none; }
 .alert-banner-item {
   display: flex;
   align-items: center;

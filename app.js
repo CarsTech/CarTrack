@@ -332,6 +332,12 @@ function carStatusCounts(car) {
 }
 
 // Returns ALL urgent/soon items across ALL cars, sorted worst-first
+function toggleAlertsBanner() {
+  const isCollapsed = localStorage.getItem('alerts-collapsed') === '1';
+  localStorage.setItem('alerts-collapsed', isCollapsed ? '0' : '1');
+  renderDashboard();
+}
+
 function getGlobalAlerts() {
   const alerts = [];
   appData.cars.forEach(car => {
@@ -476,6 +482,7 @@ function renderDashboard() {
 
   let alertHtml = '';
   if (alerts.length > 0) {
+    const isOpen = localStorage.getItem('alerts-collapsed') !== '1';
     const alertItems = alerts.slice(0, 5).map(a => {
       const carMeta = [a.car.brand, a.car.model].filter(Boolean).join(' · ');
       const carLabel = carMeta ? `${a.car.name} ${carMeta}` : a.car.name;
@@ -490,7 +497,14 @@ function renderDashboard() {
       `;
     }).join('');
     const more = alerts.length > 5 ? `<div class="alert-banner-item alert-yellow" style="font-size:.8125rem;color:#7A4A1A;padding:10px 16px;">+${alerts.length - 5} more alerts — check your cars</div>` : '';
-    alertHtml = `<div class="alert-banner">${alertItems}${more}</div>`;
+    alertHtml = `
+      <div class="alert-banner">
+        <div class="alert-banner-toggle" onclick="toggleAlertsBanner()">
+          <span class="alert-banner-toggle-title">${alerts.some(a=>a.status==='red') ? '🔴' : '🟡'} ${alerts.length} alert${alerts.length !== 1 ? 's' : ''}</span>
+          <svg class="alert-banner-chevron${isOpen ? ' open' : ''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="alert-banner-body${isOpen ? '' : ' hidden'}">${alertItems}${more}</div>
+      </div>`;
   }
 
   let carsHtml = '';
