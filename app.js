@@ -133,7 +133,7 @@ function getUnit() {
 
 function formatKm(km) {
   if (km == null || km === '') return '—';
-  return Number(km).toLocaleString('en-US') + ' ' + getUnit();
+  return Number(km).toLocaleString('en-US');
 }
 
 function daysBetween(dateStr) {
@@ -2114,7 +2114,7 @@ function openLogMaintenanceModal(carId, existingItemId, defaultDate) {
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="mf-custom-km">Interval (${getUnit()}) <span class="optional">optional</span></label>
+              <label for="mf-custom-km">Interval <span class="optional">optional</span></label>
               <input type="number" id="mf-custom-km" placeholder="e.g. 30000" min="0" inputmode="numeric">
             </div>
             <div class="form-group">
@@ -2154,7 +2154,7 @@ function openLogMaintenanceModal(carId, existingItemId, defaultDate) {
               <input type="date" id="mf-done-date" value="${item && item.lastDoneDate ? item.lastDoneDate : (prefillDate || today())}">
             </div>
             <div class="form-group">
-              <label for="mf-done-km">Mileage (${getUnit()}) <span class="optional">optional</span></label>
+              <label for="mf-done-km">Mileage <span class="optional">optional</span></label>
               <input type="number" id="mf-done-km" value="${item && item.lastDoneKm != null ? item.lastDoneKm : (car.currentKm != null ? car.currentKm : '')}" min="0" max="9999999" inputmode="numeric" placeholder="km at service" oninput="validateDoneKm(${car.currentKm != null ? car.currentKm : 'null'})">
               <div class="form-error" id="mf-done-km-error" style="display:none;">Mileage can't be less than current odometer${car.currentKm != null ? ` (${formatKm(car.currentKm)})` : ''}.</div>
             </div>
@@ -2169,7 +2169,7 @@ function openLogMaintenanceModal(carId, existingItemId, defaultDate) {
             <div class="form-section-title">Override default service intervals</div>
             <div class="form-row">
               <div class="form-group">
-                <label for="mf-interval-km">Next service (${getUnit()})</label>
+                <label for="mf-interval-km">Next service</label>
                 <input type="number" id="mf-interval-km" placeholder="${defaults && defaults.intervalKm ? defaults.intervalKm : 'e.g. 10000'}" min="0" inputmode="numeric" value="${item && item.intervalKm != null ? item.intervalKm : ''}">
                 <div class="form-hint">Default: ${defaults && defaults.intervalKm ? formatKm(defaults.intervalKm) : 'N/A'}</div>
               </div>
@@ -2189,9 +2189,9 @@ function openLogMaintenanceModal(carId, existingItemId, defaultDate) {
             <input type="date" id="mf-sched-date" value="${isScheduled && item.expiryDate ? item.expiryDate : (prefillDate || '')}">
           </div>
           <div class="form-group">
-            <label for="mf-sched-km">Target ${getUnit()} <span class="optional">optional</span></label>
+            <label for="mf-sched-km">Target mileage <span class="optional">optional</span></label>
             <input type="number" id="mf-sched-km" min="0" inputmode="numeric" placeholder="km at which to do it" value="${isScheduled && item.intervalKm != null ? item.intervalKm : ''}" oninput="validateSchedKm(${car.currentKm != null ? car.currentKm : 'null'})">
-            <div class="form-error" id="mf-sched-km-error" style="display:none;">Target ${getUnit()} can't be less than current odometer${car.currentKm != null ? ` (${formatKm(car.currentKm)})` : ''}.</div>
+            <div class="form-error" id="mf-sched-km-error" style="display:none;">Target mileage can't be less than current odometer${car.currentKm != null ? ` (${formatKm(car.currentKm)})` : ''}.</div>
           </div>
         </div>
 
@@ -2345,7 +2345,7 @@ function submitMaintenanceForm(e, carId, existingItemId) {
     const schedKm = parseFloat(document.getElementById('mf-sched-km').value);
 
     if (!isNaN(schedKm) && car.currentKm != null && schedKm < car.currentKm) {
-      showToast(`Target ${getUnit()} can't be less than current odometer (${formatKm(car.currentKm)}).`, 'error');
+      showToast(`Target mileage can't be less than current odometer (${formatKm(car.currentKm)}).`, 'error');
       document.getElementById('mf-sched-km').classList.add('input-error');
       return;
     }
@@ -2500,7 +2500,7 @@ function openEditHistoryModal(carId, entryId) {
               <input type="date" id="hf-date" value="${entry.date || ''}" required>
             </div>
             <div class="form-group">
-              <label for="hf-km">Mileage (${getUnit()}) <span class="optional">optional</span></label>
+              <label for="hf-km">Mileage <span class="optional">optional</span></label>
               <input type="number" id="hf-km" value="${entry.km != null ? entry.km : ''}" min="0" inputmode="numeric">
             </div>
           </div>
@@ -2665,7 +2665,7 @@ function openAddCustomTypeModal() {
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label for="ct-km">Interval (${getUnit()}) <span class="optional">optional</span></label>
+            <label for="ct-km">Interval <span class="optional">optional</span></label>
             <input type="number" id="ct-km" placeholder="e.g. 60000" min="0" inputmode="numeric">
           </div>
           <div class="form-group">
