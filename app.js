@@ -78,10 +78,48 @@ const BRAND_SLUG_OVERRIDES = {
 };
 
 function getVehicleTypeIcon(type, size) {
-  const s = size || 18;
-  if (type === 'truck') return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9 1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>`;
-  if (type === 'motorcycle') return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor"><path d="M19 7c0-1.1-.9-2-2-2h-3v2h3v2.65L13.52 14H10V9H6c-2.21 0-4 1.79-4 4s1.79 4 4 4c1.85 0 3.4-1.26 3.87-3h2.93L13.52 18H16v2h2v-2.35c1.15-.45 2-1.58 2-2.65 0-.9-.45-1.75-1.2-2.28L19 7zM6 15c-1.1 0-2-.9-2-2s.9-2 2-2h2.13C7.85 12.21 7 13.5 7 15H6zm13 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>`;
-  return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>`;
+  const s = size || 22;
+  if (type === 'truck') return `<svg width="${s}" height="${s}" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+    <rect x="6" y="2" width="6" height="14" rx="3" fill="#546E7A"/>
+    <rect x="52" y="2" width="6" height="14" rx="3" fill="#546E7A"/>
+    <rect x="8" y="6" width="48" height="6" rx="3" fill="#B71C1C"/>
+    <rect x="4" y="12" width="56" height="24" rx="4" fill="#E53935"/>
+    <rect x="10" y="14" width="44" height="14" rx="2" fill="#B3E5FC"/>
+    <rect x="10" y="14" width="44" height="5" rx="2" fill="#81D4FA"/>
+    <rect x="4" y="36" width="56" height="8" rx="2" fill="#C62828"/>
+    <rect x="10" y="28" width="44" height="8" rx="1" fill="#B71C1C"/>
+    <rect x="12" y="30" width="40" height="2" rx="1" fill="#37474F"/>
+    <rect x="12" y="33" width="40" height="2" rx="1" fill="#37474F"/>
+    <rect x="4" y="28" width="8" height="6" rx="1" fill="#FDD835"/>
+    <rect x="52" y="28" width="8" height="6" rx="1" fill="#FDD835"/>
+    <circle cx="14" cy="50" r="6" fill="#37474F"/><circle cx="14" cy="50" r="3" fill="#546E7A"/>
+    <circle cx="50" cy="50" r="6" fill="#37474F"/><circle cx="50" cy="50" r="3" fill="#546E7A"/>
+  </svg>`;
+  if (type === 'motorcycle') return `<svg width="${s}" height="${s}" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 18 L20 22" stroke="#546E7A" stroke-width="5" stroke-linecap="round"/>
+    <rect x="1" y="14" width="10" height="6" rx="3" fill="#78909C"/>
+    <path d="M60 18 L44 22" stroke="#546E7A" stroke-width="5" stroke-linecap="round"/>
+    <rect x="53" y="14" width="10" height="6" rx="3" fill="#78909C"/>
+    <path d="M20 22 L26 38 M44 22 L38 38" stroke="#78909C" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="32" cy="18" r="9" fill="#ECEFF1"/><circle cx="32" cy="18" r="6" fill="#CFD8DC"/><circle cx="32" cy="18" r="2.5" fill="#90CAF9"/>
+    <ellipse cx="32" cy="33" rx="13" ry="9" fill="#E53935"/>
+    <ellipse cx="32" cy="39" rx="9" ry="6" fill="#C62828"/>
+    <circle cx="32" cy="49" r="7" fill="#37474F"/><circle cx="32" cy="49" r="4" fill="#546E7A"/><circle cx="32" cy="49" r="1.5" fill="#37474F"/>
+  </svg>`;
+  return `<svg width="${s}" height="${s}" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 38 Q4 52 16 52 Q28 52 28 38" fill="#E8614F"/>
+    <path d="M36 38 Q36 52 48 52 Q60 52 58 38" fill="#E8614F"/>
+    <rect x="4" y="28" width="56" height="16" rx="4" fill="#F07161"/>
+    <path d="M12 28 L20 8 L44 8 L52 28Z" fill="#F07161"/>
+    <path d="M23 10 L26 26 L38 26 L41 10Z" fill="#455A64"/>
+    <rect x="4" y="16" width="8" height="10" rx="2" fill="#455A64" opacity="0.6"/>
+    <rect x="52" y="16" width="8" height="10" rx="2" fill="#455A64" opacity="0.6"/>
+    <ellipse cx="12" cy="34" rx="7" ry="5" fill="#ECEFF1"/><ellipse cx="12" cy="34" rx="4" ry="3" fill="#CFD8DC"/>
+    <ellipse cx="52" cy="34" rx="7" ry="5" fill="#ECEFF1"/><ellipse cx="52" cy="34" rx="4" ry="3" fill="#CFD8DC"/>
+    <rect x="24" y="40" width="16" height="3" rx="1.5" fill="#455A64"/>
+    <circle cx="16" cy="48" r="6" fill="#37474F"/><circle cx="16" cy="48" r="3" fill="#546E7A"/>
+    <circle cx="48" cy="48" r="6" fill="#37474F"/><circle cx="48" cy="48" r="3" fill="#546E7A"/>
+  </svg>`;
 }
 
 function getBrandLogoHtml(brand) {

@@ -549,8 +549,9 @@ small { font-size: 0.8125rem; }
 
 .car-color-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
 .vehicle-type-selector { display: flex; gap: 8px; margin-top: 4px; }
-.vtype-btn { flex: 1; padding: 8px 4px; border: 2px solid var(--border); border-radius: var(--radius); background: var(--bg-card); color: var(--text); font-size: 0.875rem; cursor: pointer; transition: border-color .15s, background .15s; display: flex; align-items: center; justify-content: center; gap: 6px; }
-.vtype-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
+.vtype-btn { flex: 1; padding: 10px 4px; border: 2px solid var(--border); border-radius: var(--radius); background: var(--bg-card); color: var(--text); font-size: 0.8125rem; font-weight: 600; cursor: pointer; transition: border-color .15s, background .15s, box-shadow .15s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
+.vtype-btn.active { border-color: var(--primary); background: var(--primary-light); color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+.vtype-btn svg { display: block; }
 .vtype-emoji { font-size: 1rem; flex-shrink: 0; }
 .car-color-dot { width: 28px; height: 28px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; transition: transform .15s, border-color .15s; flex-shrink: 0; }
 .car-color-dot:hover { transform: scale(1.15); }
