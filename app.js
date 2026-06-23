@@ -130,6 +130,42 @@ const CAR_MAKES_MODELS = {
   'Volvo':         ['C30', 'C40', 'S40', 'S60', 'S80', 'S90', 'V40', 'V60', 'V90', 'XC40', 'XC60', 'XC90'],
 };
 
+const TRUCK_MAKES_MODELS = {
+  'DAF':              ['CF', 'LF', 'XF', 'XG', 'XG+'],
+  'Dacia':            ['Dokker Van', 'Express'],
+  'Ford':             ['Ranger', 'Transit', 'Transit Connect', 'Transit Custom'],
+  'Iveco':            ['Daily', 'Eurocargo', 'S-Way', 'Stralis'],
+  'MAN':              ['TGE', 'TGL', 'TGM', 'TGS', 'TGX'],
+  'Mercedes-Benz':    ['Actros', 'Arocs', 'Atego', 'Sprinter', 'Vito'],
+  'Mitsubishi':       ['L200'],
+  'Nissan':           ['Navara', 'NT400'],
+  'Renault Trucks':   ['C', 'D', 'K', 'Master', 'T'],
+  'Scania':           ['G', 'L', 'P', 'R', 'S'],
+  'Toyota':           ['Hilux', 'Land Cruiser'],
+  'Volkswagen':       ['Caddy', 'Crafter', 'Transporter'],
+  'Volvo Trucks':     ['FE', 'FH', 'FL', 'FM', 'FMX'],
+};
+
+const MOTO_MAKES_MODELS = {
+  'Aprilia':          ['RS 660', 'RSV4', 'SR GT', 'SX 125', 'Tuono 660', 'Tuono V4'],
+  'BMW':              ['F 850 GS', 'F 900 R', 'G 310 R', 'R 1250 GS', 'R nineT', 'S 1000 RR'],
+  'Ducati':           ['Desert Sled', 'Monster', 'Multistrada V2', 'Panigale V2', 'Panigale V4', 'Scrambler'],
+  'Harley-Davidson':  ['Fat Boy', 'Iron 883', 'Road King', 'Softail Standard', 'Sportster S', 'Street Glide'],
+  'Honda':            ['Africa Twin', 'CB125R', 'CB500F', 'CB650R', 'CB1000R', 'CBR650R', 'Hornet'],
+  'Kawasaki':         ['Ninja 400', 'Ninja 650', 'Ninja ZX-6R', 'Ninja ZX-10R', 'Versys 650', 'Z650', 'Z900'],
+  'KTM':              ['Adventure 390', 'Adventure 890', 'Duke 390', 'Duke 790', 'Duke 1290', 'RC 390'],
+  'Royal Enfield':    ['Classic 350', 'Himalayan', 'Hunter 350', 'Interceptor 650', 'Meteor 350'],
+  'Suzuki':           ['GSX-R1000', 'GSX-S750', 'Hayabusa', 'SV650', 'V-Strom 650', 'V-Strom 1050'],
+  'Triumph':          ['Bonneville', 'Rocket 3', 'Speed Triple', 'Street Triple', 'Tiger 660', 'Tiger 900'],
+  'Yamaha':           ['MT-07', 'MT-09', 'R1', 'R3', 'R7', 'T7', 'Tracer 9', 'XMAX', 'XSR900'],
+};
+
+function getVehicleMakesModels(type) {
+  if (type === 'truck') return TRUCK_MAKES_MODELS;
+  if (type === 'motorcycle') return MOTO_MAKES_MODELS;
+  return CAR_MAKES_MODELS;
+}
+
 // ─── IN-MEMORY STATE ──────────────────────────────────
 let appData = null;    // loaded from localStorage on init
 let currentView = 'dashboard';
@@ -574,7 +610,7 @@ function renderCarCard(car) {
       <div class="car-card-status-bar ${worst}"${car.color ? ` style="background:${car.color}"` : ''}></div>
       <div class="car-card-body">
         <div class="car-card-header">
-          <div class="car-card-name">${car.color ? `<span class="car-color-dot-display" style="background:${car.color}"></span>` : ''}${escHtml(car.name)}${car.plate ? ` <span class="car-plate-tag">${escHtml(car.plate)}</span>` : ''}</div>
+          <div class="car-card-name">${car.color ? `<span class="car-color-dot-display" style="background:${car.color}"></span>` : ''}${car.vehicleType === 'truck' ? '<span class="vtype-emoji">🚛</span>' : car.vehicleType === 'motorcycle' ? '<span class="vtype-emoji">🏍️</span>' : ''}${escHtml(car.name)}${car.plate ? ` <span class="car-plate-tag">${escHtml(car.plate)}</span>` : ''}</div>
           ${getBrandLogoHtml(car.brand)}
         </div>
         ${meta ? `<div class="car-card-meta">${escHtml(meta)}</div>` : ''}
@@ -1781,8 +1817,8 @@ function closeModal() {
 }
 
 // ─── MAKE / MODEL DROPDOWN HELPERS ───────────────────
-function buildMakeOptions(selectedMake) {
-  const makes = Object.keys(CAR_MAKES_MODELS).sort();
+function buildMakeOptions(selectedMake, vtype) {
+  const makes = Object.keys(getVehicleMakesModels(vtype || 'car')).sort();
   let opts = '<option value="">— Select Brand —</option>';
   opts += makes.map(m =>
     `<option value="${escHtml(m)}" ${selectedMake === m ? 'selected' : ''}>${escHtml(m)}</option>`
@@ -1791,8 +1827,8 @@ function buildMakeOptions(selectedMake) {
   return opts;
 }
 
-function buildModelOptions(make, selectedModel) {
-  const models = CAR_MAKES_MODELS[make] || [];
+function buildModelOptions(make, selectedModel, vtype) {
+  const models = (getVehicleMakesModels(vtype || 'car')[make]) || [];
   let opts = '<option value="">— Select Model —</option>';
   opts += models.map(m =>
     `<option value="${escHtml(m)}" ${selectedModel === m ? 'selected' : ''}>${escHtml(m)}</option>`
@@ -1802,25 +1838,38 @@ function buildModelOptions(make, selectedModel) {
 }
 
 function onMakeDropdownChange() {
-  const makeVal   = document.getElementById('cf-brand').value;
-  const makeOther = document.getElementById('cf-brand-other');
-  const modelSel  = document.getElementById('cf-model');
+  const makeVal    = document.getElementById('cf-brand').value;
+  const makeOther  = document.getElementById('cf-brand-other');
+  const modelSel   = document.getElementById('cf-model');
   const modelOther = document.getElementById('cf-model-other');
+  const vtype      = (document.getElementById('cf-type') || {}).value || 'car';
 
   makeOther.style.display = makeVal === '__other__' ? '' : 'none';
   if (makeVal !== '__other__') makeOther.value = '';
 
   const effectiveMake = (makeVal === '__other__' || makeVal === '') ? '' : makeVal;
-  modelSel.innerHTML = buildModelOptions(effectiveMake, '');
+  modelSel.innerHTML = buildModelOptions(effectiveMake, '', vtype);
   modelOther.style.display = 'none';
   modelOther.value = '';
 }
 
 function onModelDropdownChange() {
-  const modelVal  = document.getElementById('cf-model').value;
+  const modelVal   = document.getElementById('cf-model').value;
   const modelOther = document.getElementById('cf-model-other');
   modelOther.style.display = modelVal === '__other__' ? '' : 'none';
   if (modelVal !== '__other__') modelOther.value = '';
+}
+
+function selectVehicleType(type) {
+  document.getElementById('cf-type').value = type;
+  document.querySelectorAll('.vtype-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.vtype-btn[data-vtype="${type}"]`).classList.add('active');
+  document.getElementById('cf-brand').innerHTML = buildMakeOptions('', type);
+  document.getElementById('cf-model').innerHTML = buildModelOptions('', '', type);
+  document.getElementById('cf-brand-other').style.display = 'none';
+  document.getElementById('cf-model-other').style.display = 'none';
+  document.getElementById('cf-brand-other').value = '';
+  document.getElementById('cf-model-other').value = '';
 }
 
 // ─── ADD / EDIT CAR MODAL ─────────────────────────────
@@ -1833,7 +1882,16 @@ function openAddCarModal() {
       </button>
     </div>
     <form id="car-form" onsubmit="submitCarForm(event)">
+      <input type="hidden" id="cf-type" value="car">
       <div class="modal-body">
+        <div class="form-group">
+          <label>Vehicle Type</label>
+          <div class="vehicle-type-selector">
+            <button type="button" class="vtype-btn active" data-vtype="car" onclick="selectVehicleType('car')">🚗 Car</button>
+            <button type="button" class="vtype-btn" data-vtype="truck" onclick="selectVehicleType('truck')">🚛 Truck</button>
+            <button type="button" class="vtype-btn" data-vtype="motorcycle" onclick="selectVehicleType('motorcycle')">🏍️ Motorcycle</button>
+          </div>
+        </div>
         <div class="form-row">
           <div class="form-group">
             <label for="cf-plate">Number Plate <span class="optional">optional</span></label>
@@ -1847,12 +1905,12 @@ function openAddCarModal() {
         <div class="form-row">
           <div class="form-group">
             <label for="cf-brand">Brand <span class="optional">optional</span></label>
-            <select id="cf-brand" onchange="onMakeDropdownChange()">${buildMakeOptions('')}</select>
+            <select id="cf-brand" onchange="onMakeDropdownChange()">${buildMakeOptions('', 'car')}</select>
             <input type="text" id="cf-brand-other" placeholder="Enter make…" maxlength="40" autocomplete="off" style="display:none;margin-top:6px;">
           </div>
           <div class="form-group">
             <label for="cf-model">Model <span class="optional">optional</span></label>
-            <select id="cf-model" onchange="onModelDropdownChange()">${buildModelOptions('', '')}</select>
+            <select id="cf-model" onchange="onModelDropdownChange()">${buildModelOptions('', '', 'car')}</select>
             <input type="text" id="cf-model-other" placeholder="Enter model…" maxlength="40" autocomplete="off" style="display:none;margin-top:6px;">
           </div>
         </div>
@@ -1891,25 +1949,36 @@ function openEditCarModal(carId) {
   const car = getCarById(carId);
   if (!car) return;
 
-  const makes       = Object.keys(CAR_MAKES_MODELS).sort();
-  const brandInList = car.brand && makes.includes(car.brand);
-  const modelModels = brandInList ? (CAR_MAKES_MODELS[car.brand] || []) : [];
-  const modelInList = car.model && modelModels.includes(car.model);
-  const initMake    = brandInList ? car.brand : (car.brand ? '__other__' : '');
-  const initModel   = modelInList ? car.model : (car.model ? '__other__' : '');
-  const otherBrand  = !brandInList && car.brand ? car.brand : '';
-  const otherModel  = !modelInList && car.model ? car.model : '';
+  const vtype        = car.vehicleType || 'car';
+  const makesModels  = getVehicleMakesModels(vtype);
+  const makes        = Object.keys(makesModels).sort();
+  const brandInList  = car.brand && makes.includes(car.brand);
+  const modelModels  = brandInList ? (makesModels[car.brand] || []) : [];
+  const modelInList  = car.model && modelModels.includes(car.model);
+  const initMake     = brandInList ? car.brand : (car.brand ? '__other__' : '');
+  const initModel    = modelInList ? car.model : (car.model ? '__other__' : '');
+  const otherBrand   = !brandInList && car.brand ? car.brand : '';
+  const otherModel   = !modelInList && car.model ? car.model : '';
 
   openModal(`
     <div class="modal-header">
-      <h2>Edit Car</h2>
+      <h2>Edit Vehicle</h2>
       <button class="modal-close" onclick="closeModal()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
     </div>
     <form id="car-form" onsubmit="submitCarForm(event)">
       <input type="hidden" id="cf-id" value="${escHtml(carId)}">
+      <input type="hidden" id="cf-type" value="${vtype}">
       <div class="modal-body">
+        <div class="form-group">
+          <label>Vehicle Type</label>
+          <div class="vehicle-type-selector">
+            <button type="button" class="vtype-btn ${vtype === 'car' ? 'active' : ''}" data-vtype="car" onclick="selectVehicleType('car')">🚗 Car</button>
+            <button type="button" class="vtype-btn ${vtype === 'truck' ? 'active' : ''}" data-vtype="truck" onclick="selectVehicleType('truck')">🚛 Truck</button>
+            <button type="button" class="vtype-btn ${vtype === 'motorcycle' ? 'active' : ''}" data-vtype="motorcycle" onclick="selectVehicleType('motorcycle')">🏍️ Motorcycle</button>
+          </div>
+        </div>
         <div class="form-row">
           <div class="form-group">
             <label for="cf-plate">Number Plate <span class="optional">optional</span></label>
@@ -1923,12 +1992,12 @@ function openEditCarModal(carId) {
         <div class="form-row">
           <div class="form-group">
             <label for="cf-brand">Brand <span class="optional">optional</span></label>
-            <select id="cf-brand" onchange="onMakeDropdownChange()">${buildMakeOptions(initMake)}</select>
+            <select id="cf-brand" onchange="onMakeDropdownChange()">${buildMakeOptions(initMake, vtype)}</select>
             <input type="text" id="cf-brand-other" placeholder="Enter make…" maxlength="40" autocomplete="off" value="${escHtml(otherBrand)}" style="${otherBrand ? '' : 'display:none;'}margin-top:6px;">
           </div>
           <div class="form-group">
             <label for="cf-model">Model <span class="optional">optional</span></label>
-            <select id="cf-model" onchange="onModelDropdownChange()">${buildModelOptions(brandInList ? car.brand : '', initModel)}</select>
+            <select id="cf-model" onchange="onModelDropdownChange()">${buildModelOptions(brandInList ? car.brand : '', initModel, vtype)}</select>
             <input type="text" id="cf-model-other" placeholder="Enter model…" maxlength="40" autocomplete="off" value="${escHtml(otherModel)}" style="${otherModel ? '' : 'display:none;'}margin-top:6px;">
           </div>
         </div>
@@ -1979,6 +2048,7 @@ function submitCarForm(e) {
   const vin   = (document.getElementById('cf-vin').value || '').trim().toUpperCase();
   const plate = (document.getElementById('cf-plate').value || '').trim().toUpperCase();
   const color = document.getElementById('cf-color').value || null;
+  const vehicleType = (document.getElementById('cf-type') || {}).value || 'car';
 
   if (!name) { showToast('Please enter a name for the car.', 'error'); return; }
 
@@ -1986,14 +2056,15 @@ function submitCarForm(e) {
     // Edit
     const car = getCarById(id);
     if (!car) return;
-    car.name  = name;
-    car.brand = brand || null;
-    car.model = model || null;
-    car.year  = isNaN(year) ? null : year;
-    car.currentKm = isNaN(km) ? null : km;
-    car.vin   = vin || null;
-    car.plate = plate || null;
-    car.color = color;
+    car.name        = name;
+    car.brand       = brand || null;
+    car.model       = model || null;
+    car.year        = isNaN(year) ? null : year;
+    car.currentKm   = isNaN(km) ? null : km;
+    car.vin         = vin || null;
+    car.plate       = plate || null;
+    car.color       = color;
+    car.vehicleType = vehicleType;
     saveData();
     closeModal();
     showToast('Car updated.');
@@ -2010,6 +2081,7 @@ function submitCarForm(e) {
       currentKm: isNaN(km) ? null : km,
       vin: vin || null,
       color: color,
+      vehicleType,
       createdAt: new Date().toISOString(),
       maintenanceItems: [],
       history: [],

@@ -548,6 +548,10 @@ small { font-size: 0.8125rem; }
 .car-color-dot-display { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
 
 .car-color-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.vehicle-type-selector { display: flex; gap: 8px; margin-top: 4px; }
+.vtype-btn { flex: 1; padding: 8px 4px; border: 2px solid var(--border); border-radius: var(--radius); background: var(--bg-card); color: var(--text); font-size: 0.875rem; cursor: pointer; transition: border-color .15s, background .15s; }
+.vtype-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
+.vtype-emoji { font-size: 1rem; flex-shrink: 0; }
 .car-color-dot { width: 28px; height: 28px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; transition: transform .15s, border-color .15s; flex-shrink: 0; }
 .car-color-dot:hover { transform: scale(1.15); }
 .car-color-dot.selected { border-color: #fff; box-shadow: 0 0 0 2px #333; transform: scale(1.1); }
