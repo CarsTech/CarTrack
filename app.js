@@ -655,7 +655,7 @@ function renderCarCard(car) {
       <div class="car-card-status-bar ${worst}"${car.color ? ` style="background:${car.color}"` : ''}></div>
       <div class="car-card-body">
         <div class="car-card-header">
-          <div class="car-card-name">${car.color ? `<span class="car-color-dot-display" style="background:${car.color}"></span>` : ''}${car.vehicleType && car.vehicleType !== 'car' ? `<span class="vtype-emoji">${getVehicleTypeIcon(car.vehicleType, 16)}</span>` : ''}${escHtml(car.name)}${car.plate ? ` <span class="car-plate-tag">${escHtml(car.plate)}</span>` : ''}</div>
+          <div class="car-card-name">${car.color ? `<span class="car-color-dot-display" style="background:${car.color}"></span>` : ''}<span class="vtype-emoji">${getVehicleTypeIcon(car.vehicleType || 'car', 16)}</span>${escHtml(car.name)}${car.plate ? ` <span class="car-plate-tag">${escHtml(car.plate)}</span>` : ''}</div>
           ${getBrandLogoHtml(car.brand)}
         </div>
         ${meta ? `<div class="car-card-meta">${escHtml(meta)}</div>` : ''}
