@@ -70,54 +70,22 @@ const CAR_COLOR_PALETTE = [
   '#FFB300','#546E7A','#D81B60','#00897B',
 ];
 
-const BRAND_LOGO_MAP = {
-  'alfa romeo':    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Alfa_Romeo_2015.svg/100px-Alfa_Romeo_2015.svg.png',
-  'audi':          'https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Audi-Logo_2016.svg/100px-Audi-Logo_2016.svg.png',
-  'bmw':           'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/100px-BMW.svg.png',
-  'chevrolet':     'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Chevrolet_logo.svg/100px-Chevrolet_logo.svg.png',
-  'citroen':       'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Citro%C3%ABn_2022_logo.svg/100px-Citro%C3%ABn_2022_logo.svg.png',
-  'citroën':       'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Citro%C3%ABn_2022_logo.svg/100px-Citro%C3%ABn_2022_logo.svg.png',
-  'dacia':         'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Dacia_Logo_2022.svg/100px-Dacia_Logo_2022.svg.png',
-  'fiat':          'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Fiat_wordmark.svg/100px-Fiat_wordmark.svg.png',
-  'ford':          'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Ford_logo_flat.svg/100px-Ford_logo_flat.svg.png',
-  'honda':         'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Honda.svg/100px-Honda.svg.png',
-  'hyundai':       'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Hyundai_Motor_Company_logo.svg/100px-Hyundai_Motor_Company_logo.svg.png',
-  'jaguar':        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Jaguar_logo.svg/100px-Jaguar_logo.svg.png',
-  'jeep':          'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Jeep-logo-2010.svg/100px-Jeep-logo-2010.svg.png',
-  'kia':           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Kia-logo.svg/100px-Kia-logo.svg.png',
-  'land rover':    'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Land_Rover_logo.svg/100px-Land_Rover_logo.svg.png',
-  'lexus':         'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Lexus_division_wordmark.svg/100px-Lexus_division_wordmark.svg.png',
-  'mazda':         'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Mazda_logo.svg/100px-Mazda_logo.svg.png',
-  'mercedes':      'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/100px-Mercedes-Logo.svg.png',
-  'mercedes-benz': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/100px-Mercedes-Logo.svg.png',
-  'mini':          'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/MINI_logo.svg/100px-MINI_logo.svg.png',
-  'mitsubishi':    'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Mitsubishi-logo.svg/100px-Mitsubishi-logo.svg.png',
-  'nissan':        'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Nissan_logo.svg/100px-Nissan_logo.svg.png',
-  'opel':          'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Opel_logo.svg/100px-Opel_logo.svg.png',
-  'peugeot':       'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Peugeot_2021_Logo.svg/100px-Peugeot_2021_Logo.svg.png',
-  'porsche':       'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Porsche_logo.svg/100px-Porsche_logo.svg.png',
-  'renault':       'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Renault_2021_Text.svg/100px-Renault_2021_Text.svg.png',
-  'seat':          'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/SEAT_Logo.svg/100px-SEAT_Logo.svg.png',
-  'skoda':         'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Skoda_wordmark.svg/100px-Skoda_wordmark.svg.png',
-  'škoda':         'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Skoda_wordmark.svg/100px-Skoda_wordmark.svg.png',
-  'subaru':        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Subaru_logo.svg/100px-Subaru_logo.svg.png',
-  'suzuki':        'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Suzuki_logo.svg/100px-Suzuki_logo.svg.png',
-  'tesla':         'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Tesla_T_symbol.svg/100px-Tesla_T_symbol.svg.png',
-  'toyota':        'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Toyota_carlogo.svg/100px-Toyota_carlogo.svg.png',
-  'volkswagen':    'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Volkswagen_logo_2019.svg/100px-Volkswagen_logo_2019.svg.png',
-  'vw':            'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Volkswagen_logo_2019.svg/100px-Volkswagen_logo_2019.svg.png',
-  'volvo':         'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Volvo_Cars_logo.svg/100px-Volvo_Cars_logo.svg.png',
+const BRAND_SLUG_OVERRIDES = {
+  'mercedes': 'mercedes-benz',
+  'vw': 'volkswagen',
+  'citroën': 'citroen',
+  'škoda': 'skoda',
 };
 
 function getBrandLogoHtml(brand) {
   if (!brand) return '';
   const key = brand.toLowerCase().trim();
-  const url = BRAND_LOGO_MAP[key];
+  const slug = (BRAND_SLUG_OVERRIDES[key] || key)
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
+  const url = `https://cdn.jsdelivr.net/gh/filippofilip95/car-logos-dataset@master/logos/optimized/${slug}.png`;
   const initial = brand.charAt(0).toUpperCase();
-  if (url) {
-    return `<span class="car-brand-logo-wrap"><img class="car-brand-logo" src="${url}" alt="${escHtml(brand)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="car-brand-initial" style="display:none">${initial}</span></span>`;
-  }
-  return `<span class="car-brand-logo-wrap"><span class="car-brand-initial">${initial}</span></span>`;
+  return `<span class="car-brand-logo-wrap"><img class="car-brand-logo" src="${url}" alt="${escHtml(brand)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="car-brand-initial" style="display:none">${initial}</span></span>`;
 }
 
 // ─── CAR MAKES & MODELS ───────────────────────────────
