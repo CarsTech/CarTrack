@@ -599,7 +599,7 @@ function renderDashboard() {
     alertHtml = `
       <div class="alert-banner">
         <div class="alert-banner-toggle" onclick="toggleAlertsBanner()">
-          <span class="alert-banner-toggle-title">${alerts.some(a=>a.status==='red') ? '🔴' : '🟡'} ${alerts.length} alert${alerts.length !== 1 ? 's' : ''}</span>
+          <span class="alert-banner-toggle-title">${alerts.some(a=>a.status==='red') ? '🔴' : '🟡'} ${alerts.length} Alert${alerts.length !== 1 ? 's' : ''}</span>
           <svg class="alert-banner-chevron${isOpen ? ' open' : ''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <div class="alert-banner-body${isOpen ? '' : ' hidden'}">${alertItems}${more}</div>
