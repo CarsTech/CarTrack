@@ -1544,6 +1544,33 @@ input.input-error, textarea.input-error { border-color: var(--status-red) !impor
 .csd-item:hover { background: var(--bg-secondary); color: var(--primary); }
 .csd-item.selected { color: var(--primary); font-weight: 600; }
 
+.rf-multi-wrap { position: relative; display: inline-block; }
+.rf-multi-btn { font-family: inherit; cursor: pointer; }
+.rf-multi-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  min-width: 148px;
+  z-index: 200;
+  padding: 4px 0;
+}
+.rf-multi-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  user-select: none;
+}
+.rf-multi-option:hover { background: var(--bg-hover, #f4f5f7); }
+.rf-multi-option input[type="checkbox"] { accent-color: var(--primary); width: 15px; height: 15px; cursor: pointer; }
 .rf-select {
   appearance: none;
   -webkit-appearance: none;

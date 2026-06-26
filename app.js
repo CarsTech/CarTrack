@@ -965,12 +965,14 @@ function renderAllHistory() {
         Filters:
       </span>
       <button class="rf-pill rf-all active" id="rf-all" onclick="clearRecordFilters()">All</button>
-      <select class="rf-select" id="rf-status" onchange="applyRecordFilters()">
-        <option value="">All Statuses</option>
-        <option value="planned">Planned</option>
-        <option value="done">Done</option>
-        <option value="overdue">Overdue</option>
-      </select>
+      <div class="rf-multi-wrap" id="rf-status-wrap">
+        <button type="button" class="rf-select rf-multi-btn" id="rf-status-btn" onclick="toggleRfStatusDropdown(event)">All Statuses ▾</button>
+        <div class="rf-multi-panel" id="rf-status-panel" style="display:none">
+          <label class="rf-multi-option"><input type="checkbox" value="planned" onchange="applyRecordFilters()"> Planned</label>
+          <label class="rf-multi-option"><input type="checkbox" value="done" onchange="applyRecordFilters()"> Done</label>
+          <label class="rf-multi-option"><input type="checkbox" value="overdue" onchange="applyRecordFilters()"> Overdue</label>
+        </div>
+      </div>
       <select class="rf-select" id="rf-car" onchange="applyRecordFilters()">
         <option value="">All Cars</option>${carOpts}
       </select>
@@ -1361,27 +1363,61 @@ function openAddRecordOnDate(dateStr) {
   `);
 }
 
+function toggleRfStatusDropdown(e) {
+  e.stopPropagation();
+  const panel = document.getElementById('rf-status-panel');
+  if (!panel) return;
+  const isOpen = panel.style.display !== 'none';
+  panel.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) {
+    setTimeout(() => document.addEventListener('click', _closeRfStatus), 0);
+  }
+}
+function _closeRfStatus(e) {
+  const wrap = document.getElementById('rf-status-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    const panel = document.getElementById('rf-status-panel');
+    if (panel) panel.style.display = 'none';
+    document.removeEventListener('click', _closeRfStatus);
+  }
+}
+function getSelectedStatuses() {
+  const panel = document.getElementById('rf-status-panel');
+  if (!panel) return [];
+  return Array.from(panel.querySelectorAll('input:checked')).map(cb => cb.value);
+}
+function updateStatusBtnLabel(selected) {
+  const btn = document.getElementById('rf-status-btn');
+  if (!btn) return;
+  const labels = { planned: 'Planned', done: 'Done', overdue: 'Overdue' };
+  if (selected.length === 0) btn.textContent = 'All Statuses ▾';
+  else if (selected.length === 1) btn.textContent = labels[selected[0]] + ' ▾';
+  else btn.textContent = selected.map(s => labels[s]).join(' + ') + ' ▾';
+  btn.classList.toggle('rf-active', selected.length > 0);
+}
+
 function applyRecordFilters() {
-  const statusVal = document.getElementById('rf-status')?.value   || '';
+  const statusVals = getSelectedStatuses();
+  updateStatusBtnLabel(statusVals);
   const carVal    = document.getElementById('rf-car')?.value      || '';
   const catVal    = document.getElementById('rf-category')?.value || '';
   const monVal    = document.getElementById('rf-month')?.value    || '';
   const yearVal   = document.getElementById('rf-year')?.value     || '';
-  const anyActive = statusVal || carVal || catVal || monVal || yearVal;
+  const anyActive = statusVals.length > 0 || carVal || catVal || monVal || yearVal;
 
   // All pill active only when no filter selected
   const allBtn = document.getElementById('rf-all');
   if (allBtn) allBtn.classList.toggle('active', !anyActive);
 
   // Active pill styling on selects
-  ['rf-status', 'rf-car', 'rf-category', 'rf-month', 'rf-year'].forEach(id => {
+  ['rf-car', 'rf-category', 'rf-month', 'rf-year'].forEach(id => {
     const sel = document.getElementById(id);
     if (sel) sel.classList.toggle('rf-active', !!sel.value);
   });
 
   const all = _collectAllRecords();
   const filtered = all.filter(e => {
-    if (statusVal && e.status !== statusVal)                        return false;
+    if (statusVals.length > 0 && !statusVals.includes(e.status))   return false;
     if (carVal    && e.carId  !== carVal)                           return false;
     if (catVal    && e.category !== catVal)                         return false;
     if (yearVal   && (!e.date || !e.date.startsWith(yearVal)))      return false;
@@ -1466,7 +1502,9 @@ function applyRecordFilters() {
 }
 
 function clearRecordFilters() {
-  ['rf-status', 'rf-car', 'rf-category', 'rf-month', 'rf-year'].forEach(id => {
+  const panel = document.getElementById('rf-status-panel');
+  if (panel) panel.querySelectorAll('input').forEach(cb => cb.checked = false);
+  ['rf-car', 'rf-category', 'rf-month', 'rf-year'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
